@@ -1,0 +1,412 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Navbar (Top Navigation) --- */
+.navbar {
+    background-color: #4D148C; /* FedEx Purple */
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .brand {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #FF6200; /* FedEx Orange */
+}
+
+/* --- Main Container for Content --- */
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 960px; /* Wider for dashboard content */
+    box-sizing: border-box;
+    margin: 30px auto; /* Centers the container and adds vertical space */
+    text-align: center;
+    flex-grow: 1; /* Allows container to take up available vertical space */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+}
+
+h2 {
+    color: #4D148C; /* FedEx Purple */
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+
+/* --- Shared Card Styles for Sections --- */
+.auth-section, .dashboard-grid, .scan-new-card, .tracking-list-card {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+/* --- Auth Section (Login/Register) Specific Styles --- */
+.auth-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.auth-section label {
+    align-self: flex-start; /* Aligns label to the left */
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.auth-section input[type="text"],
+.auth-section input[type="password"] {
+    width: 100%;
+    max-width: 350px; /* Limits input width */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* Includes padding/border in width */
+}
+.auth-section button {
+    background-color: #007bff; /* Standard blue for actions */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.05em;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    min-width: 120px; /* Ensures buttons are readable */
+}
+.auth-section button:hover {
+    background-color: #0056b3;
+}
+
+/* --- Dashboard Grid Layout --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default (mobile first) */
+    gap: 30px; /* Space between grid items */
+}
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+        text-align: left; /* Align card content to left within the grid */
+    }
+    .scan-new-card {
+        order: 2; /* Puts scan card on the right column */
+    }
+    .tracking-list-card {
+        order: 1; /* Puts list on the left column */
+    }
+}
+
+/* --- Tracking List Styles --- */
+.tracking-list {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    max-height: 400px; /* Limits height and adds scrollbar if content overflows */
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.tracking-list li {
+    display: flex;
+    justify-content: space-between; /* Spaces items out */
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+.tracking-list li:last-child {
+    border-bottom: none; /* No border on the last item */
+}
+.tracking-info {
+    flex-grow: 1; /* Allows info to take up available space */
+}
+.tracking-info strong {
+    font-size: 1.1em;
+    color: #333;
+}
+.tracking-info small {
+    display: block; /* Makes date appear on new line */
+    color: #777;
+    font-size: 0.85em;
+}
+.tracking-actions button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    margin-left: 10px; /* Space between buttons */
+    background-color: #007bff; /* Default action button color */
+}
+.tracking-actions button.delete-tracking-btn {
+    background-color: #dc3545; /* Red for delete button */
+}
+.tracking-actions button.delete-tracking-btn:hover {
+    background-color: #c82333;
+}
+
+/* --- Scanner Section (re-used from previous version) --- */
+.scanner-section {
+    position: relative;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.viewport {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    border: 1px solid #ddd;
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.drawingBuffer { /* QuaggaJS uses this for drawing detection lines */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Manual Input Section (re-used) --- */
+.manual-input-section {
+    padding: 15px;
+}
+.manual-input-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.manual-input-section input[type="text"] {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+.manual-input-section button {
+    background-color: #FF6200; /* FedEx Orange for the save button */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.05em;
+    transition: background-color 0.3s ease;
+}
+.manual-input-section button:hover {
+    background-color: #e65200;
+}
+
+/* --- Flask Flash Messages --- */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.flashes li {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.flashes .success {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+}
+.flashes .danger {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb;
+}
+.flashes .warning {
+    background-color: #fff3cd; /* Light yellow */
+    color: #856404; /* Dark yellow text */
+    border: 1px solid #ffeeba;
+}
+.flashes .info {
+    background-color: #d1ecf1; /* Light blue */
+    color: #0c5460; /* Dark blue text */
+    border: 1px solid #bee5eb;
+}
+
+/* --- Loading and Error Messages --- */
+#loading {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #007bff;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* --- Receipt Display Section --- */
+.receipt-section {
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+    margin-top: 30px;
+    text-align: left; /* Aligns receipt details to the left */
+}
+
+.receipt-content {
+    background-color: #fcfcfc;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow-x: auto; /* For small screens if content is too wide */
+}
+
+.receipt-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+    justify-content: center;
+    gap: 10px; /* Space between action buttons */
+}
+
+.receipt-actions button {
+    flex-grow: 1; /* Allows buttons to grow and fill space */
+    max-width: 200px; /* Limits individual button width */
+    margin: 0; /* Override default button margin */
+}
+.receipt-actions input[type="email"] {
+    flex-grow: 2; /* Allows email input to be wider */
+    max-width: 300px;
+    margin: 0;
+}
+
+/* --- Utility Class for Hiding Elements --- */
+.hidden {
+    display: none;
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 767px) {
+    .navbar {
+        flex-direction: column; /* Stack navbar items vertically */
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+    .navbar .nav-links {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar .nav-links a {
+        margin: 5px 0;
+    }
+
+    .container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+
+    /* Full width for inputs and buttons on small screens */
+    .auth-section input[type="text"],
+    .auth-section input[type="password"],
+    .auth-section button,
+    .manual-input-section input[type="text"],
+    .manual-input-section button {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Adjust tracking list items for small screens */
+    .tracking-list li {
+        flex-direction: column; /* Stack tracking info and actions vertically */
+        align-items: flex-start;
+    }
+    .tracking-actions {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .tracking-actions button {
+        margin-left: 0;
+        margin-right: 5px;
+        flex: 1; /* Allow buttons to share space */
+        min-width: unset; /* Remove min-width to allow shrinking */
+    }
+
+    /* Adjust receipt actions for small screens */
+    .receipt-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    .receipt-actions button,
+    .receipt-actions input[type="email"] {
+        max-width: 100%;
+        width: 100%;
+    }
+}

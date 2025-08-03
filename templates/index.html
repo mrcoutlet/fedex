@@ -1,0 +1,22 @@
+{% extends "base.html" %} {# This template extends the base.html layout #}
+
+{% block title %}Login/Register{% endblock %} {# Sets the title for this specific page #}
+
+{% block content %}
+    <h1>Welcome to FedEx Package Tracker</h1>
+
+    <div class="auth-section">
+        <h2>Login or Register</h2>
+        <form action="{{ url_for('login') }}" method="POST">
+            <label for="phone_number">Phone Number (as Username):</label>
+            <input type="text" id="phone_number" name="phone_number" placeholder="e.g., 1234567890" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            {# Buttons to trigger either login or register action #}
+            <button type="submit" name="action" value="login">Login</button>
+            <button type="submit" name="action" value="register">Register</button>
+        </form>
+    </div>
+{% endblock %}

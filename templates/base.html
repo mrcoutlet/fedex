@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FedEx Package Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:,"> </head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="brand">FedEx Tracker</a>
+        <div class="nav-links">
+            {% if session.get('user_id') %} {# Check if user is logged in #}
+                <a href="{{ url_for('dashboard') }}">My Trackings</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login/Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {# Display Flask flash messages (success, danger, info, warning) #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %} {# This is where child templates will inject their content #}
+    </div>
+
+    {# QuaggaJS Library for barcode scanning (only loaded once in base.html) #}
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+    {# Our custom JavaScript file #}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

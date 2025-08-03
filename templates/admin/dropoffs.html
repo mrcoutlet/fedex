@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Admin Dashboard - Drop-off Search</h2>
+    <hr>
+
+    {# Flash messages #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3>Search Drop-off Records</h3>
+            <a href="{{ url_for('admin_users') }}" class="btn btn-secondary">
+                Manage Users
+            </a>
+        </div>
+        <div class="card-body">
+            <form action="{{ url_for('admin_dropoffs') }}" method="GET" class="mb-3">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="search_user" class="form-label">Search User (Phone Number)</label>
+                        <input type="text" class="form-control" id="search_user" name="search_user" placeholder="Enter phone number" value="{{ search_user_query if search_user_query }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date if start_date }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date if end_date }}">
+                    </div>
+                    <div class="col-md-2 d-flex">
+                        <button type="submit" class="btn btn-primary me-2">Search Drop-offs</button>
+                        <a href="{{ url_for('admin_dropoffs') }}" class="btn btn-secondary">Clear Search</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Drop-off Records ({{ dropoffs|length }} total)</h3>
+            <a href="{{ url_for('export_all_dropoffs_csv') }}" class="btn btn-success btn-sm float-end me-2">Export All Drop-offs to CSV</a>
+        </div>
+        <div class="card-body">
+            {% if dropoffs %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tracking Number</th>
+                            <th>User Phone</th>
+                            <th>Timestamp (Local)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tracking in dropoffs %}
+                        <tr>
+                            <td>{{ tracking.id }}</td>
+                            <td>{{ tracking.tracking_number }}</td>
+                            {# Ensure 'tracking.user' is not None before accessing phone_number #}
+                            <td>{{ tracking.user.phone_number if tracking.user else 'N/A' }}</td>
+                            <td>
+                                {{ tracking.timestamp.astimezone(DISPLAY_TIMEZONE).strftime('%Y-%m-%d %I:%M %p %Z') }}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('edit_tracking', tracking_id=tracking.id) }}" class="btn btn-sm btn-info">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No drop-off records found matching your search criteria.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
